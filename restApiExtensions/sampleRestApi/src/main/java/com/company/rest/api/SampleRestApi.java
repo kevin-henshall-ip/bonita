@@ -4,9 +4,6 @@ import com.company.rest.api.common.Constants;
 import com.company.rest.api.common.RestApiError;
 import com.company.rest.api.common.RestApiException;
 import com.company.rest.api.common.RestApiUtils;
-import org.bonitasoft.engine.api.APIClient;
-import org.bonitasoft.engine.api.IdentityAPI;
-import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
 import org.bonitasoft.engine.identity.User;
@@ -14,7 +11,6 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.extension.rest.RestAPIContext;
-import org.bonitasoft.web.extension.rest.RestApiController;
 import org.bonitasoft.web.extension.rest.RestApiResponse;
 import org.bonitasoft.web.extension.rest.RestApiResponseBuilder;
 import org.slf4j.Logger;
@@ -26,24 +22,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SampleRestApi implements RestApiController {
+public class SampleRestApi extends BaseRestApiExtension {
 
     public static final String PARAM_TASKID = "taskId";
 
+    // logger name should start with 'org.bonitasoft' so that log messages will appear in the default bonita log file
     private static final Logger LOGGER = LoggerFactory.getLogger("org.bonitasoft.rest.api.SampleRestApi");
 
     private Long taskId;
-    private ProcessAPI processApi;
-    private IdentityAPI identityApi;
 
     @Override
     public RestApiResponse doHandle(HttpServletRequest request,
                                     RestApiResponseBuilder responseBuilder,
-                                    RestAPIContext context) {
+                                    RestAPIContext restApiContext) {
         try {
-            APIClient apiClient = context.getApiClient();
-            processApi = apiClient.getProcessAPI();
-            identityApi = apiClient.getIdentityAPI();
+            initialiseBonitaApiAccessors(restApiContext);
 
             // retrieve params
             retrieveParameters(request);
@@ -52,7 +45,7 @@ public class SampleRestApi implements RestApiController {
             // and the list of human tasks assigned to them. Refer to TODO for the associated bonita javadoc
 
             // retrieve current user information
-            long currentUserId = context.getApiSession().getUserId();
+            long currentUserId = restApiContext.getApiSession().getUserId();
             User currentUser = identityApi.getUser(currentUserId);
             LOGGER.info("currentUser: " + currentUser);
 
