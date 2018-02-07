@@ -1,4 +1,10 @@
 # intellij generated files
-*.idea
-*.iml
+**/.idea
+**/*.iml
+
+# temporary files
+**/*.swp
+
+# generated files
+**/target
 

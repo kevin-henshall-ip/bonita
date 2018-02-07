@@ -1,0 +1,43 @@
+<assembly>
+    <id>page-package</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <!-- include RestApiEntryPoint source files -->
+        <fileSet>
+            <directory>${project.basedir}/src/main/java</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>**/RestApiEntryPoint.groovy</include>
+            </includes>
+        </fileSet>
+        <!-- include compiled jars -->
+        <fileSet>
+            <directory>${project.build.directory}</directory>
+            <outputDirectory>/lib</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+        <!-- include all resources -->
+        <fileSet>
+            <directory>${project.basedir}/src/main/resources</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <includes>
+                <include>*:jar</include>
+            </includes>
+            <useProjectArtifact>false</useProjectArtifact>
+            <scope>runtime</scope>
+            <outputDirectory>/lib</outputDirectory>
+        </dependencySet>
+    </dependencySets>
+</assembly>
