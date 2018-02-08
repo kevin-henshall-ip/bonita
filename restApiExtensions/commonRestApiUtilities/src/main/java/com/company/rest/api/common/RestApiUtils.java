@@ -63,8 +63,9 @@ public class RestApiUtils {
      * Parses the json request body
      * @param request The HttpServletRequest
      * @return The parsed json request body
+     * @throws RestApiException If an error is encountered
      */
-    public Object parseJsonBody(HttpServletRequest request)
+    public Map parseJsonBody(HttpServletRequest request)
             throws RestApiException {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -79,6 +80,10 @@ public class RestApiUtils {
 
     /**
      * Load a property file into a java.util.Properties
+     * @param filename The name of the property file to load
+     * @param resourceProvider The ResourceProvider as obtained from the RestAPIContext
+     * @return The java properties object
+     * @throws RestApiException If the property file fails to load
      */
     public static Properties loadProperties(String filename, ResourceProvider resourceProvider)
             throws RestApiException {

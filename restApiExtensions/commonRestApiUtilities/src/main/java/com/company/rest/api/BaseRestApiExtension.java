@@ -12,9 +12,9 @@ import org.bonitasoft.web.extension.rest.RestApiResponseBuilder;
 import javax.servlet.http.HttpServletRequest;
 
 public abstract class BaseRestApiExtension implements RestApiController {
-    protected ProcessAPI processApi;
-    protected IdentityAPI identityApi;
-    protected ProfileAPI profileApi;
+    private ProcessAPI processApi;
+    private IdentityAPI identityApi;
+    private ProfileAPI profileApi;
 
     @Override
     public abstract RestApiResponse doHandle(HttpServletRequest request,
@@ -26,5 +26,17 @@ public abstract class BaseRestApiExtension implements RestApiController {
         processApi = apiClient.getProcessAPI();
         identityApi = apiClient.getIdentityAPI();
         profileApi = apiClient.getProfileAPI();
+    }
+
+    public ProcessAPI getProcessApi() {
+        return processApi;
+    }
+
+    public IdentityAPI getIdentityApi() {
+        return identityApi;
+    }
+
+    public ProfileAPI getProfileApi() {
+        return profileApi;
     }
 }

@@ -15,6 +15,10 @@
     <name>sampleRestApi</name>
     <description>Sample REST API</description>
 
+    <properties>
+        <main.basedir>${project.basedir}/..</main.basedir>
+    </properties>
+
     <dependencies>
         <!-- internal project dependencies -->
         <dependency>
@@ -22,7 +26,13 @@
             <artifactId>CommonRestApiUtilities</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.company.rest.api</groupId>
+            <artifactId>CommonRestApiUtilities</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

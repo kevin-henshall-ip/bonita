@@ -16,7 +16,7 @@
         <!-- include compiled jars -->
         <fileSet>
             <directory>${project.build.directory}</directory>
-            <outputDirectory>/lib</outputDirectory>
+            <outputDirectory>lib</outputDirectory>
             <includes>
                 <include>*.jar</include>
             </includes>

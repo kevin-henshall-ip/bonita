@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,17 +42,19 @@ public class SampleRestApi extends BaseRestApiExtension {
             // retrieve params
             retrieveParameters(request);
 
+            LOGGER.info("taskId: " + taskId);
+
             // perform tasks using the bonita java apis. In this example, we retrieve the current user
             // and the list of human tasks assigned to them. Refer to TODO for the associated bonita javadoc
 
             // retrieve current user information
             long currentUserId = restApiContext.getApiSession().getUserId();
-            User currentUser = identityApi.getUser(currentUserId);
+            User currentUser = getIdentityApi().getUser(currentUserId);
             LOGGER.info("currentUser: " + currentUser);
 
             // retrieve tasks assigned to current user
             SearchOptions searchOptions = createAssignedTaskSearchOptions(currentUserId);
-            SearchResult<HumanTaskInstance> humanTasksAssignedToUserSearchResult = processApi.searchHumanTaskInstances(searchOptions);
+            SearchResult<HumanTaskInstance> humanTasksAssignedToUserSearchResult = getProcessApi().searchHumanTaskInstances(searchOptions);
             List<HumanTaskInstance> humanTasksAssignedToCurrentUser = humanTasksAssignedToUserSearchResult.getResult();
             LOGGER.info("humanTasksAssignedToUserSearchResult: " + humanTasksAssignedToCurrentUser);
 
@@ -63,12 +66,12 @@ public class SampleRestApi extends BaseRestApiExtension {
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_OK, RestApiUtils.toJson(response));
         } catch (RestApiException e) {
             LOGGER.error("An error was encountered within SampleRestApi: " + e);
-            LOGGER.error(e.getStackTrace().toString());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
             RestApiError restApiError = new RestApiError(e.getErrorCode(), e.getMessage());
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_BAD_REQUEST, RestApiUtils.toJson(restApiError));
         } catch (Exception e) {
             LOGGER.error("An error was encountered within SampleRestApi: " + e);
-            LOGGER.error(e.getStackTrace().toString());
+            LOGGER.error(Arrays.toString(e.getStackTrace()));
             RestApiError restApiError = new RestApiError(Constants.ERROR_UNKNOWN_ERROR, e.getMessage());
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_BAD_REQUEST, RestApiUtils.toJson(restApiError));
         }

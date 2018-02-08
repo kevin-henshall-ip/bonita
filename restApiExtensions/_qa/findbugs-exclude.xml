@@ -1,0 +1,6 @@
+<FindBugsFilter>
+    <!-- ignore all groovy source files -->
+    <Match>
+        <Source name="~.*\.groovy" />
+    </Match>
+</FindBugsFilter>

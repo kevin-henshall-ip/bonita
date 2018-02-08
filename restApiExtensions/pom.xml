@@ -11,6 +11,10 @@
     <packaging>pom</packaging>
 
     <properties>
+        <main.basedir>${project.basedir}</main.basedir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- build tool versions -->
         <bonita.version>7.6.2</bonita.version>
         <groovy.version>2.4.13</groovy.version>
         <java.version>1.8</java.version>
@@ -19,8 +23,13 @@
         <groovy-eclipse-batch.version>2.4.3-01</groovy-eclipse-batch.version>
         <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
         <gson.version>2.8.2</gson.version>
-
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mockito.version>2.13.0</mockito.version>
+        <junit.version>4.12</junit.version>
+        <findbugs-version>3.0.5</findbugs-version>
+        <checkstyle.version>2.17</checkstyle.version>
+        <cobertura.version>2.7</cobertura.version>
+        <javadoc.version>3.0.0</javadoc.version>
+        <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
     </properties>
 
     <dependencies>
@@ -36,8 +45,138 @@
             <version>${groovy.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- testing -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <!--run with: mvn clean compile findbugs:check-->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>${findbugs-version}</version>
+                <configuration>
+                    <findbugsXmlOutput>true</findbugsXmlOutput>
+                    <xmlOutput>true</xmlOutput>
+                    <effort>Max</effort>
+                    <threshold>Low</threshold>
+                    <trace>false</trace>
+                    <excludeFilterFile>${main.basedir}/_qa/findbugs-exclude.xml</excludeFilterFile>
+                    <!-- Optional directory to put findbugs xdoc xml report -->
+                    <xmlOutputDirectory>target/findbugs</xmlOutputDirectory>
+                    <failOnError>true</failOnError>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>findbugs</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkstyle.version}</version>
+                <configuration>
+                    <configLocation>${main.basedir}/_qa/checkstyle_checks.xml</configLocation>
+                    <failsOnError>false</failsOnError>
+                    <consoleOutput>true</consoleOutput>
+                    <includeTestSourceDirectory>false</includeTestSourceDirectory>
+                    <excludes>**/target/generated-sources/*</excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>verify</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!--run with: mvn clean verify-->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>${cobertura.version}</version>
+                <dependencies>
+                    <!--needed as 2.6 by default isn't compatible with Java8-->
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm</artifactId>
+                        <version>5.0.3</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <check>
+                        <branchRate>85</branchRate>
+                        <lineRate>85</lineRate>
+                        <haltOnFailure>false</haltOnFailure>
+                    </check>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                    <outputDirectory>${project.build.directory}/surefire-reports/cobertura</outputDirectory>
+                    <instrumentation>
+                        <ignoreTrivial>true</ignoreTrivial>
+                        <ignores>
+                            <ignore>org.slf4j.Logger.*</ignore>
+                        </ignores>
+                        <!-- ignore generated code -->
+                        <excludes>
+                            <!-- e.g.
+                            <exclude>au/edu/uq/generatedCode/json/**/*</exclude>
+                            -->
+                        </excludes>
+                    </instrumentation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${javadoc.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <additionalOptions>
+                                <additionalOption>-Xdoclint:none</additionalOption>
+                            </additionalOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <modules>
         <module>commonRestApiUtilities</module>
