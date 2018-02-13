@@ -35,7 +35,12 @@
     <dependencies>
         <dependency>
             <groupId>org.bonitasoft.web</groupId>
+            <!-- if using the community edition -->
             <artifactId>bonita-web-extensions</artifactId>
+            <!--
+                if using a subscription edition
+            <artifactId>bonita-web-extensions-sp</artifactId>
+            -->
             <version>${bonita.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -53,7 +58,6 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

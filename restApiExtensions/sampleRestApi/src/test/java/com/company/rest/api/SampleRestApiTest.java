@@ -162,9 +162,9 @@ public class SampleRestApiTest {
         when(httpRequestMock.getParameter(SampleRestApi.PARAM_TASKID)).thenReturn(taskIdString);
 
         RestApiResponse restApiResponse = sampleRestApi.doHandle(httpRequestMock, restApiResponseBuilder, restApiContextMock);
-        SampleRestApiResponseType sampleRestApiResponseType = gson.fromJson(restApiResponse.getResponse().toString(), SampleRestApiResponseType.class);
+        SampleRestApiResponse sampleRestApiResponse = gson.fromJson(restApiResponse.getResponse().toString(), SampleRestApiResponse.class);
         assertEquals("httpStatus", 200, restApiResponse.getHttpStatus());
-        assertEquals(currentUserId, sampleRestApiResponseType.getCurrentUser().getId());
-        assertEquals(humanTaskInstances.size(), sampleRestApiResponseType.getHumanTasksAssignedToCurrentUser().size());
+        assertEquals(currentUserId, sampleRestApiResponse.getCurrentUser().getId());
+        assertEquals(humanTaskInstances.size(), sampleRestApiResponse.getHumanTasksAssignedToCurrentUser().size());
     }
 }

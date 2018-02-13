@@ -5,7 +5,7 @@
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
-        <!-- include RestApiEntryPoint source files -->
+        <!-- include RestApiEntryPoint source file -->
         <fileSet>
             <directory>${project.basedir}/src/main/java</directory>
             <outputDirectory></outputDirectory>

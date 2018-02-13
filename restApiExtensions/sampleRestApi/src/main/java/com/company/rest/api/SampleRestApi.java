@@ -6,7 +6,7 @@ import com.company.rest.api.common.RestApiException;
 import com.company.rest.api.common.RestApiUtils;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
-import org.bonitasoft.engine.identity.User;
+import org.bonitasoft.engine.identity.impl.UserImpl;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
@@ -19,9 +19,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SampleRestApi extends BaseRestApiExtension {
 
@@ -49,21 +47,21 @@ public class SampleRestApi extends BaseRestApiExtension {
 
             // retrieve current user information
             long currentUserId = restApiContext.getApiSession().getUserId();
-            User currentUser = getIdentityApi().getUser(currentUserId);
+            UserImpl currentUser = new UserImpl(getIdentityApi().getUser(currentUserId));
             LOGGER.info("currentUser: " + currentUser);
 
             // retrieve tasks assigned to current user
             SearchOptions searchOptions = createAssignedTaskSearchOptions(currentUserId);
             SearchResult<HumanTaskInstance> humanTasksAssignedToUserSearchResult = getProcessApi().searchHumanTaskInstances(searchOptions);
             List<HumanTaskInstance> humanTasksAssignedToCurrentUser = humanTasksAssignedToUserSearchResult.getResult();
-            LOGGER.info("humanTasksAssignedToUserSearchResult: " + humanTasksAssignedToCurrentUser);
+            LOGGER.info("humanTasksAssignedToCurrentUser: " + humanTasksAssignedToCurrentUser);
 
             // construct response
-            Map<String, Object> response = new HashMap<>();
-            response.put("currentUser", currentUser);
-            response.put("humanTasksAssignedToCurrentUser", humanTasksAssignedToCurrentUser);
+            SampleRestApiResponse sampleRestApiResponse = new SampleRestApiResponse();
+            sampleRestApiResponse.setCurrentUser(currentUser);
+            sampleRestApiResponse.setHumanTasksAssignedToCurrentUser(humanTasksAssignedToCurrentUser);
 
-            return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_OK, RestApiUtils.toJson(response));
+            return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_OK, RestApiUtils.toJson(sampleRestApiResponse));
         } catch (RestApiException e) {
             LOGGER.error("An error was encountered within SampleRestApi: " + e);
             LOGGER.error(Arrays.toString(e.getStackTrace()));
