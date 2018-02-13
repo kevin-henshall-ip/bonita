@@ -1,0 +1,6 @@
+# bonita
+
+This repository contains useful projects for making best use of the [Bonita BPM](https://www.bonitasoft.com/) platform. The examples are based on version 7.6 of the community edition but should work on older (provided the version is at least 7.3) versions too. The following sections provide a brief overview of the relevant project.
+
+## restApiExtensions
+[Bonita BPM](https://www.bonitasoft.com/) platform is a relative newcomer to the business process management stage and unlike several of its competitors, it takes an API first approach to the design and development of business processes. Bonitasoft makes extensive use of REST APIs to facilitate interactions with the core of it's business process management solution. Everyhing from creating users, deploying processes, acquiring and actioning tasks is acomplished through the provided REST APIs. While this sounds great for interacting with the core Bonita engine, it presents a bit of a problem when you need to do something other than what is possible through the default APIs. This is where the REST API extensions come into play. They are deployed into the Bonita runtime platform and can be invoked in exactly the same way as the default REST APIs provided by the system. This project provides a template for creating REST API extensions for the Bonita BPM platform.
