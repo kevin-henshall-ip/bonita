@@ -63,12 +63,12 @@ public class SampleRestApi extends BaseRestApiExtension {
 
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_OK, RestApiUtils.toJson(sampleRestApiResponse));
         } catch (RestApiException e) {
-            LOGGER.error("An error was encountered within SampleRestApi: " + e);
+            LOGGER.error("An error was encountered: " + e);
             LOGGER.error(Arrays.toString(e.getStackTrace()));
             RestApiError restApiError = new RestApiError(e.getErrorCode(), e.getMessage());
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_BAD_REQUEST, RestApiUtils.toJson(restApiError));
         } catch (Exception e) {
-            LOGGER.error("An error was encountered within SampleRestApi: " + e);
+            LOGGER.error("An error was encountered: " + e);
             LOGGER.error(Arrays.toString(e.getStackTrace()));
             RestApiError restApiError = new RestApiError(Constants.ERROR_UNKNOWN_ERROR, e.getMessage());
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_BAD_REQUEST, RestApiUtils.toJson(restApiError));
