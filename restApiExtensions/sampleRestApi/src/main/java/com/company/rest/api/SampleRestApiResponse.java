@@ -1,7 +1,6 @@
 package com.company.rest.api;
 
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
-import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.impl.UserImpl;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class SampleRestApiResponse {
         this.humanTasksAssignedToCurrentUser = humanTasksAssignedToCurrentUser;
     }
 
-    public User getCurrentUser() {
+    public UserImpl getCurrentUser() {
         return currentUser;
     }
 
