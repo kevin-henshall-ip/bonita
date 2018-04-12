@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>SampleRestApi</artifactId>
+    <artifactId>sampleRestApi</artifactId>
 
     <name>sampleRestApi</name>
     <description>Sample REST API</description>
