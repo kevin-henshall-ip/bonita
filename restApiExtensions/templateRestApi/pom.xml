@@ -12,7 +12,7 @@
 
     <artifactId>TemplateRestApi</artifactId>
 
-    <name>sampleRestApi</name>
+    <name>templateRestApi</name>
     <description>Template REST API</description>
 
     <properties>

@@ -28,8 +28,8 @@ public class TemplateRestApi extends BaseRestApiExtension {
             // retrieve params
             retrieveParameters(request);
 
-            // perform tasks using the bonita java apis. In this example, we retrieve the current user
-            // and the list of human tasks assigned to them. Refer to
+            // perform tasks using the bonita java apis
+            // Refer to
             // https://documentation.bonitasoft.com/javadoc/api/7.6/index.html for the associated bonita javadoc
 
             // construct response
@@ -39,15 +39,17 @@ public class TemplateRestApi extends BaseRestApiExtension {
             return RestApiUtils.buildResponse(responseBuilder,
                     HttpServletResponse.SC_OK, RestApiUtils.toJson(templateRestApiResponse));
         } catch (RestApiException e) {
-            LOGGER.error("An error was encountered: " + e);
+            String errorMessage = "An error was encountered within TemplateRestApi: " + e.getMessage();
+            LOGGER.error(errorMessage);
             LOGGER.error(Arrays.toString(e.getStackTrace()));
-            RestApiError restApiError = new RestApiError(e.getErrorCode(), e.getMessage());
+            RestApiError restApiError = new RestApiError(e.getErrorCode(), errorMessage);
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_BAD_REQUEST,
                     RestApiUtils.toJson(restApiError));
         } catch (Exception e) {
-            LOGGER.error("An error was encountered: " + e);
+            String errorMessage = "An error was encountered within TemplateRestApi: " + e.getMessage();
+            LOGGER.error(errorMessage);
             LOGGER.error(Arrays.toString(e.getStackTrace()));
-            RestApiError restApiError = new RestApiError(Constants.ERROR_UNKNOWN_ERROR, e.getMessage());
+            RestApiError restApiError = new RestApiError(Constants.ERROR_UNKNOWN_ERROR, errorMessage);
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_BAD_REQUEST,
                     RestApiUtils.toJson(restApiError));
         }
