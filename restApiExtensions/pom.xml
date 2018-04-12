@@ -185,6 +185,7 @@
     <modules>
         <module>commonRestApiUtilities</module>
         <module>templateRestApi</module>
+        <module>sampleRestApi</module>
     </modules>
 
 </project>
