@@ -23,12 +23,12 @@
         <!-- internal project dependencies -->
         <dependency>
             <groupId>com.company.rest.api</groupId>
-            <artifactId>CommonRestApiUtilities</artifactId>
+            <artifactId>commonRestApiUtilities</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.company.rest.api</groupId>
-            <artifactId>CommonRestApiUtilities</artifactId>
+            <artifactId>commonRestApiUtilities</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
