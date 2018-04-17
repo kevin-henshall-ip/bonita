@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.List;
 
 public class SampleRestApi extends BaseRestApiExtension {
@@ -64,15 +63,13 @@ public class SampleRestApi extends BaseRestApiExtension {
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_OK, RestApiUtils.toJson(sampleRestApiResponse));
         } catch (RestApiException e) {
             String errorMessage = "An error was encountered within SampleRestApi: " + e.getMessage();
-            LOGGER.error(errorMessage);
-            LOGGER.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(errorMessage, e);
             RestApiError restApiError = new RestApiError(e.getErrorCode(), errorMessage);
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_BAD_REQUEST,
                     RestApiUtils.toJson(restApiError));
         } catch (Exception e) {
             String errorMessage = "An error was encountered within SampleRestApi: " + e.getMessage();
-            LOGGER.error(errorMessage);
-            LOGGER.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(errorMessage, e);
             RestApiError restApiError = new RestApiError(Constants.ERROR_UNKNOWN_ERROR, errorMessage);
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_BAD_REQUEST,
                     RestApiUtils.toJson(restApiError));

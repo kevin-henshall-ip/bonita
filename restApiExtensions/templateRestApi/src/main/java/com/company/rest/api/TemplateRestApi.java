@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 public class TemplateRestApi extends BaseRestApiExtension {
     // logger name should start with 'org.bonitasoft' so that log messages will appear in the default bonita log file
@@ -40,15 +39,13 @@ public class TemplateRestApi extends BaseRestApiExtension {
                     HttpServletResponse.SC_OK, RestApiUtils.toJson(templateRestApiResponse));
         } catch (RestApiException e) {
             String errorMessage = "An error was encountered within TemplateRestApi: " + e.getMessage();
-            LOGGER.error(errorMessage);
-            LOGGER.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(errorMessage, e);
             RestApiError restApiError = new RestApiError(e.getErrorCode(), errorMessage);
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_BAD_REQUEST,
                     RestApiUtils.toJson(restApiError));
         } catch (Exception e) {
             String errorMessage = "An error was encountered within TemplateRestApi: " + e.getMessage();
-            LOGGER.error(errorMessage);
-            LOGGER.error(Arrays.toString(e.getStackTrace()));
+            LOGGER.error(errorMessage, e);
             RestApiError restApiError = new RestApiError(Constants.ERROR_UNKNOWN_ERROR, errorMessage);
             return RestApiUtils.buildResponse(responseBuilder, HttpServletResponse.SC_BAD_REQUEST,
                     RestApiUtils.toJson(restApiError));
