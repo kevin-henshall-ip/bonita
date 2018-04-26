@@ -22,6 +22,7 @@ public class RestApiUtils {
     private static final Gson gson = new GsonBuilder()
             .serializeNulls()
             .setPrettyPrinting()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
             .create();
 
     /**
