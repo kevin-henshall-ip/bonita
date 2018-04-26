@@ -71,7 +71,7 @@ public class SampleRestApiTest {
 
     @Before
     public void setup() throws Exception {
-        sampleRestApi = new SampleRestApi();
+        sampleRestApi = new RestApiEntryPoint();
         restApiResponseBuilder = new RestApiResponseBuilder();
 
         // init human task instances
@@ -109,7 +109,7 @@ public class SampleRestApiTest {
         RestApiError restApiError = gson.fromJson(restApiResponse.getResponse().toString(), RestApiError.class);
         assertEquals("httpStatus", 400, restApiResponse.getHttpStatus());
         assertEquals("errorCode", Constants.ERROR_REQUIRED_PARAMETER_MISSING, restApiError.getErrorCode());
-        assertEquals("errorMessage", "Parameter '" + SampleRestApi.PARAM_TASKID + "' cannot be empty", restApiError.getErrorMessage());
+        assertEquals("errorMessage", "An error was encountered within SampleRestApi: Parameter '" + SampleRestApi.PARAM_TASKID + "' cannot be empty", restApiError.getErrorMessage());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class SampleRestApiTest {
         RestApiError restApiError = gson.fromJson(restApiResponse.getResponse().toString(), RestApiError.class);
         assertEquals("httpStatus", 400, restApiResponse.getHttpStatus());
         assertEquals("errorCode", Constants.ERROR_REQUIRED_PARAMETER_MISSING, restApiError.getErrorCode());
-        assertEquals("errorMessage", "Parameter '" + SampleRestApi.PARAM_TASKID + "' cannot be empty", restApiError.getErrorMessage());
+        assertEquals("errorMessage", "An error was encountered within SampleRestApi: Parameter '" + SampleRestApi.PARAM_TASKID + "' cannot be empty", restApiError.getErrorMessage());
     }
 
     @Test
@@ -131,7 +131,7 @@ public class SampleRestApiTest {
         RestApiError restApiError = gson.fromJson(restApiResponse.getResponse().toString(), RestApiError.class);
         assertEquals("httpStatus", 400, restApiResponse.getHttpStatus());
         assertEquals("errorCode", Constants.ERROR_REQUIRED_PARAMETER_MISSING, restApiError.getErrorCode());
-        assertEquals("errorMessage", "Parameter '" + SampleRestApi.PARAM_TASKID + "' cannot be empty", restApiError.getErrorMessage());
+        assertEquals("errorMessage", "An error was encountered within SampleRestApi: Parameter '" + SampleRestApi.PARAM_TASKID + "' cannot be empty", restApiError.getErrorMessage());
     }
 
     @Test
@@ -142,7 +142,7 @@ public class SampleRestApiTest {
         RestApiError restApiError = gson.fromJson(restApiResponse.getResponse().toString(), RestApiError.class);
         assertEquals("httpStatus", 400, restApiResponse.getHttpStatus());
         assertEquals("errorCode", Constants.ERROR_INVALID_PARAMETER, restApiError.getErrorCode());
-        assertEquals("errorMessage", "Parameter '" + SampleRestApi.PARAM_TASKID + "' must be a positive integer", restApiError.getErrorMessage());
+        assertEquals("errorMessage", "An error was encountered within SampleRestApi: Parameter '" + SampleRestApi.PARAM_TASKID + "' must be a positive integer", restApiError.getErrorMessage());
     }
 
     @Test
@@ -154,7 +154,7 @@ public class SampleRestApiTest {
         RestApiError restApiError = gson.fromJson(restApiResponse.getResponse().toString(), RestApiError.class);
         assertEquals("httpStatus", 400, restApiResponse.getHttpStatus());
         assertEquals("errorCode", Constants.ERROR_UNKNOWN_ERROR, restApiError.getErrorCode());
-        assertEquals("errorMessage", "blah", restApiError.getErrorMessage());
+        assertEquals("errorMessage", "An error was encountered within SampleRestApi: blah", restApiError.getErrorMessage());
     }
 
     @Test
