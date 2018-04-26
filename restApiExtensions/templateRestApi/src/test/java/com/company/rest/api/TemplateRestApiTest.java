@@ -49,7 +49,7 @@ public class TemplateRestApiTest {
 
     @Before
     public void setup() throws Exception {
-        templateRestApi = new TemplateRestApi();
+        templateRestApi = new RestApiEntryPoint();
         restApiResponseBuilder = new RestApiResponseBuilder();
 
         // restApiContent mock
@@ -62,9 +62,9 @@ public class TemplateRestApiTest {
     }
 
     @Test
-    public void taskIdParamNull() {
+    public void success() {
         RestApiResponse restApiResponse = templateRestApi.doHandle(httpRequestMock, restApiResponseBuilder, restApiContextMock);
-        TemplateRestApiResponse restApiError = gson.fromJson(restApiResponse.getResponse().toString(), TemplateRestApiResponse.class);
+        TemplateRestApiResponse templateRestApiResponse = gson.fromJson(restApiResponse.getResponse().toString(), TemplateRestApiResponse.class);
         assertEquals("httpStatus", 200, restApiResponse.getHttpStatus());
     }
 }
