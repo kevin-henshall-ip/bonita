@@ -59,5 +59,14 @@ public class TemplateRestApi extends BaseRestApiExtension {
      */
     public void retrieveParameters(HttpServletRequest request) throws RestApiException {
         // retrieve parameters from the provided request object
+        validateParameters();
+    }
+
+    /**
+     * Validates the given parameters
+     * @throws RestApiException If a validation error is encountered
+     */
+    private void validateParameters() throws RestApiException {
+        // validate the given parameters
     }
 }
