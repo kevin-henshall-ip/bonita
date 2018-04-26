@@ -102,52 +102,7 @@ public class SampleRestApiTest {
     }
 
     @Test
-    public void taskIdParamNull() {
-        when(httpRequestMock.getParameter(SampleRestApi.PARAM_TASKID)).thenReturn(null);
-
-        RestApiResponse restApiResponse = sampleRestApi.doHandle(httpRequestMock, restApiResponseBuilder, restApiContextMock);
-        RestApiError restApiError = gson.fromJson(restApiResponse.getResponse().toString(), RestApiError.class);
-        assertEquals("httpStatus", 400, restApiResponse.getHttpStatus());
-        assertEquals("errorCode", Constants.ERROR_REQUIRED_PARAMETER_MISSING, restApiError.getErrorCode());
-        assertEquals("errorMessage", "An error was encountered within SampleRestApi: Parameter '" + SampleRestApi.PARAM_TASKID + "' cannot be empty", restApiError.getErrorMessage());
-    }
-
-    @Test
-    public void taskIdParamEmpty() {
-        when(httpRequestMock.getParameter(SampleRestApi.PARAM_TASKID)).thenReturn("");
-
-        RestApiResponse restApiResponse = sampleRestApi.doHandle(httpRequestMock, restApiResponseBuilder, restApiContextMock);
-        RestApiError restApiError = gson.fromJson(restApiResponse.getResponse().toString(), RestApiError.class);
-        assertEquals("httpStatus", 400, restApiResponse.getHttpStatus());
-        assertEquals("errorCode", Constants.ERROR_REQUIRED_PARAMETER_MISSING, restApiError.getErrorCode());
-        assertEquals("errorMessage", "An error was encountered within SampleRestApi: Parameter '" + SampleRestApi.PARAM_TASKID + "' cannot be empty", restApiError.getErrorMessage());
-    }
-
-    @Test
-    public void taskIdParamBlank() {
-        when(httpRequestMock.getParameter(SampleRestApi.PARAM_TASKID)).thenReturn("         ");
-
-        RestApiResponse restApiResponse = sampleRestApi.doHandle(httpRequestMock, restApiResponseBuilder, restApiContextMock);
-        RestApiError restApiError = gson.fromJson(restApiResponse.getResponse().toString(), RestApiError.class);
-        assertEquals("httpStatus", 400, restApiResponse.getHttpStatus());
-        assertEquals("errorCode", Constants.ERROR_REQUIRED_PARAMETER_MISSING, restApiError.getErrorCode());
-        assertEquals("errorMessage", "An error was encountered within SampleRestApi: Parameter '" + SampleRestApi.PARAM_TASKID + "' cannot be empty", restApiError.getErrorMessage());
-    }
-
-    @Test
-    public void taskIdParamInvalid() {
-        when(httpRequestMock.getParameter(SampleRestApi.PARAM_TASKID)).thenReturn(" eee        ");
-
-        RestApiResponse restApiResponse = sampleRestApi.doHandle(httpRequestMock, restApiResponseBuilder, restApiContextMock);
-        RestApiError restApiError = gson.fromJson(restApiResponse.getResponse().toString(), RestApiError.class);
-        assertEquals("httpStatus", 400, restApiResponse.getHttpStatus());
-        assertEquals("errorCode", Constants.ERROR_INVALID_PARAMETER, restApiError.getErrorCode());
-        assertEquals("errorMessage", "An error was encountered within SampleRestApi: Parameter '" + SampleRestApi.PARAM_TASKID + "' must be a positive integer", restApiError.getErrorMessage());
-    }
-
-    @Test
     public void getApiSessionThrowsException() {
-        when(httpRequestMock.getParameter(SampleRestApi.PARAM_TASKID)).thenReturn(taskIdString);
         when(restApiContextMock.getApiSession()).thenThrow(new RuntimeException("blah"));
 
         RestApiResponse restApiResponse = sampleRestApi.doHandle(httpRequestMock, restApiResponseBuilder, restApiContextMock);
@@ -159,8 +114,6 @@ public class SampleRestApiTest {
 
     @Test
     public void success() {
-        when(httpRequestMock.getParameter(SampleRestApi.PARAM_TASKID)).thenReturn(taskIdString);
-
         RestApiResponse restApiResponse = sampleRestApi.doHandle(httpRequestMock, restApiResponseBuilder, restApiContextMock);
         SampleRestApiResponse sampleRestApiResponse = gson.fromJson(restApiResponse.getResponse().toString(), SampleRestApiResponse.class);
         assertEquals("httpStatus", 200, restApiResponse.getHttpStatus());

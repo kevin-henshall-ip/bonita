@@ -27,8 +27,6 @@ public class SampleRestApi extends BaseRestApiExtension {
     // logger name should start with 'org.bonitasoft' so that log messages will appear in the default bonita log file
     private static final Logger LOGGER = LoggerFactory.getLogger("org.bonitasoft.rest.api.SampleRestApi");
 
-    private Long taskId;
-
     @Override
     public RestApiResponse doHandle(HttpServletRequest request,
                                     RestApiResponseBuilder responseBuilder,
@@ -39,10 +37,9 @@ public class SampleRestApi extends BaseRestApiExtension {
             // retrieve params
             retrieveParameters(request);
 
-            LOGGER.info("taskId: " + taskId);
-
             // perform tasks using the bonita java apis. In this example, we retrieve the current user
-            // and the list of human tasks assigned to them. Refer to TODO for the associated bonita javadoc
+            // and the list of human tasks assigned to them. Refer to
+            // https://documentation.bonitasoft.com/javadoc/api/7.6/index.html for the associated bonita javadoc
 
             // retrieve current user information
             long currentUserId = restApiContext.getApiSession().getUserId();
@@ -82,24 +79,7 @@ public class SampleRestApi extends BaseRestApiExtension {
      * @throws RestApiException If an error is encountered
      */
     public void retrieveParameters(HttpServletRequest request) throws RestApiException {
-        String taskIdString = RestApiUtils.getParameter(request, PARAM_TASKID, true);
-        LOGGER.debug("taskIdString: " + taskIdString);
-        validateParameters(taskIdString);
-    }
-
-    /**
-     * Validates the given parameters
-     * @param taskIdString The taskId parameter value retrieved from the request
-     * @throws RestApiException If a validation error is encountered
-     */
-    private void validateParameters(String taskIdString)
-            throws RestApiException {
-        try {
-            taskId = Long.parseLong(taskIdString);
-        } catch (NumberFormatException e) {
-            throw new RestApiException(Constants.ERROR_INVALID_PARAMETER, "Parameter '" + PARAM_TASKID +
-                    "' must be a positive integer");
-        }
+        // do nothing as no parameters are required
     }
 
     /**
